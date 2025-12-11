@@ -1,0 +1,20 @@
+﻿# poultry_pests.yaml - YOLOv5 dataset config
+# Multi-class pests for poultry + nearby crop area
+
+path: data/poultry_pests   # dataset root relative to yolov5 folder
+
+train: images/train
+val: images/val
+
+names:
+  0: rat
+  1: mouse
+  2: dog
+  3: cat
+  4: snake
+  5: wild_bird
+  6: beetle
+  7: fly
+  8: cockroach
+  9: whitefly
+  10: aphid
