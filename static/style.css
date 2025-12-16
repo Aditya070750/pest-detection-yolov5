@@ -1,0 +1,127 @@
+/* Vanta background container */
+#vanta-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* behind everything */
+}
+
+/* General typography */
+body {
+    font-family: "Poppins", sans-serif;
+    color: #e6edf3;
+    background-color: #0d1117;
+    margin: 0;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+/* Navbar styling */
+.navbar {
+    background: rgba(13, 17, 23, 0.9);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-brand, .navbar-nav .nav-link {
+    color: #61dafb !important;
+    font-weight: 500;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #646cff !important;
+    transition: 0.3s ease;
+}
+
+/* Card styling */
+.card {
+    background: rgba(17, 25, 40, 0.75);
+    color: #e6edf3;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    background: rgba(97, 218, 251, 0.1);
+    box-shadow: 0 0 20px rgba(97, 218, 251, 0.3);
+}
+
+/* Container for glassmorphism */
+.container {
+    background: rgba(17, 25, 40, 0.75);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 30px;
+    margin-top: 80px; /* sits below navbar */
+}
+
+/* Buttons */
+.btn-custom, .btn-outline-info {
+    background: linear-gradient(90deg, #61dafb, #646cff);
+    color: #000 !important;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    box-shadow: 0 0 10px rgba(97, 218, 251, 0.4);
+    transition: 0.3s ease-in-out;
+}
+
+.btn-custom:hover, .btn-outline-info:hover {
+    transform: scale(1.05);
+    background: linear-gradient(90deg, #646cff, #61dafb);
+    box-shadow: 0 0 20px rgba(100, 108, 255, 0.7);
+}
+
+/* Footer styling */
+footer {
+    margin-top: 40px;
+    font-size: 0.9rem;
+    color: #8b949e;
+    text-align: center;
+}
+
+/* Smaller icons for headers */
+header .icon {
+    font-size: 1.5rem;
+    margin-top: 10px;
+}
+
+/* Table style (for log.html) */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+}
+
+th {
+    background-color: #61dafb;
+    color: #000;
+    font-weight: bold;
+}
+
+td {
+    background: rgba(17, 25, 40, 0.85);
+    border-bottom: 1px solid #333;
+}
+
+/* Scrollbar customization */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #61dafb, #646cff);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #646cff;
+}

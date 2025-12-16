@@ -1,0 +1,17 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environment
+yolov5_env/
+
+# Datasets (DO NOT upload)
+yolov5/data/dataset/
+data/dataset/
+data/poultry_insects/
+
+# Training runs
+runs/train/
+
+# Model weights (optional)
+!runs/train/**/weights/*.pt
