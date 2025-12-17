@@ -1,7 +1,7 @@
 ﻿# poultry_pests.yaml - YOLOv5 dataset config
 # Multi-class pests for poultry + nearby crop area
 
-path: data/poultry_pests   # dataset root relative to yolov5 folder
+path: data/poultry_pests # dataset root relative to yolov5 folder
 
 train: images/train
 val: images/val

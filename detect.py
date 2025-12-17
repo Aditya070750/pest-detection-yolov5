@@ -1,16 +1,15 @@
 # Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
-"""
-YOLOv5 Live Webcam Detection (Optimized for FPS + Accuracy)
-"""
+"""YOLOv5 Live Webcam Detection (Optimized for FPS + Accuracy)."""
 
 import argparse
 import os
 import sys
 import time
 from pathlib import Path
-import torch
-import cv2
 from threading import Thread
+
+import cv2
+import torch
 
 # === Setup ===
 FILE = Path(__file__).resolve()
@@ -20,10 +19,10 @@ if str(ROOT) not in sys.path:
 ROOT = Path(os.path.relpath(ROOT, Path.cwd()))
 
 from models.common import DetectMultiBackend
-from utils.general import (check_img_size, check_requirements,
-                           non_max_suppression, scale_boxes)
-from utils.torch_utils import select_device, smart_inference_mode
+from utils.general import check_img_size, check_requirements, non_max_suppression, scale_boxes
 from utils.plots import Annotator, colors
+from utils.torch_utils import select_device, smart_inference_mode
+
 
 # ===============================================================
 # Threaded Webcam Stream (for higher FPS)
@@ -57,23 +56,24 @@ class WebcamStream:
 # Main YOLOv5 Inference Function
 # ===============================================================
 @smart_inference_mode()
-def run(weights=ROOT / "yolov5n.pt",   # lightweight nano model
-        source=0,
-        imgsz=(320, 320), 
-        conf_thres=0.5,   # increased confidence threshold for better accuracy
-        iou_thres=0.4,    # slightly reduced IoU to reduce duplicate boxes
-        device='',
-        view_img=True,
-        classes=None,
-        agnostic_nms=False,
-        half=False,
-        dnn=False):
+def run(
+    weights=ROOT / "yolov5n.pt",  # lightweight nano model
+    source=0,
+    imgsz=(320, 320),
+    conf_thres=0.5,  # increased confidence threshold for better accuracy
+    iou_thres=0.4,  # slightly reduced IoU to reduce duplicate boxes
+    device="",
+    view_img=True,
+    classes=None,
+    agnostic_nms=False,
+    half=False,
+    dnn=False,
+):
     """Run YOLOv5 live webcam detection optimized for FPS and accuracy."""
-
     # Initialize
     device = select_device(device)
     model = DetectMultiBackend(weights, device=device, dnn=dnn)
-    stride, names, pt = model.stride, model.names, model.pt
+    stride, names, _pt = model.stride, model.names, model.pt
     imgsz = check_img_size(imgsz, s=stride)
 
     # Open webcam with threaded stream
@@ -96,7 +96,7 @@ def run(weights=ROOT / "yolov5n.pt",   # lightweight nano model
         im = cv2.cvtColor(im0, cv2.COLOR_BGR2RGB)
 
         h, w = im.shape[:2]
-        stride_val = int(model.stride) if hasattr(model, 'stride') else 32
+        stride_val = int(model.stride) if hasattr(model, "stride") else 32
         new_w = (w // stride_val) * stride_val
         new_h = (h // stride_val) * stride_val
         if (new_w != w) or (new_h != h):
@@ -123,20 +123,19 @@ def run(weights=ROOT / "yolov5n.pt",   # lightweight nano model
 
                 # Draw boxes and labels on the frame
                 for *xyxy, conf, cls in reversed(det):
-                    label = f'{names[int(cls)]} {conf:.2f}'
+                    label = f"{names[int(cls)]} {conf:.2f}"
                     annotator.box_label(xyxy, label, color=colors(int(cls), True))
 
             im0 = annotator.result()
 
         # Calculate FPS
         fps = 1 / (time.time() - start_time)
-        cv2.putText(im0, f"FPS: {int(fps)}", (10, 50),
-                    cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 255, 0), 2)
+        cv2.putText(im0, f"FPS: {int(fps)}", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 255, 0), 2)
 
         # Display
         if view_img:
             cv2.imshow("YOLOv5 Live Detection (Optimized)", im0)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
+            if cv2.waitKey(1) & 0xFF == ord("q"):
                 break
 
     cap.stop()
