@@ -3,12 +3,14 @@
 import os
 import sys
 from pathlib import Path
+
 import cv2
 import torch
+
 from models.common import DetectMultiBackend
 from utils.general import check_img_size, non_max_suppression, scale_boxes
-from utils.torch_utils import select_device, smart_inference_mode
 from utils.plots import Annotator, colors
+from utils.torch_utils import select_device, smart_inference_mode
 
 # === Setup ===
 FILE = Path(__file__).resolve()
@@ -17,32 +19,30 @@ if str(ROOT) not in sys.path:
     sys.path.append(str(ROOT))
 ROOT = Path(os.path.relpath(ROOT, Path.cwd()))
 
-@smart_inference_mode()
-def run(weights=ROOT / "yolov5s.pt",      # you can change to your rat model later
-        source=ROOT / "data" / "images",  # folder or single image path
-        imgsz=(640, 640),
-        conf_thres=0.25,
-        iou_thres=0.45,
-        device='',
-        save_dir=ROOT / "runs" / "detect_images"
-        ):
-    """
-    Run YOLOv5 on all images in a folder (or a single image).
-    No webcam, only file-based detection.
-    """
 
+@smart_inference_mode()
+def run(
+    weights=ROOT / "yolov5s.pt",  # you can change to your rat model later
+    source=ROOT / "data" / "images",  # folder or single image path
+    imgsz=(640, 640),
+    conf_thres=0.25,
+    iou_thres=0.45,
+    device="",
+    save_dir=ROOT / "runs" / "detect_images",
+):
+    """Run YOLOv5 on all images in a folder (or a single image). No webcam, only file-based detection.
+    """
     # device & model
     device = select_device(device)
     model = DetectMultiBackend(weights, device=device)
-    stride, names, pt = model.stride, model.names, model.pt
+    stride, names, _pt = model.stride, model.names, model.pt
     imgsz = check_img_size(imgsz, s=stride)
 
     # collect image files
     source = str(source)
     if os.path.isdir(source):
         exts = (".jpg", ".jpeg", ".png", ".bmp", ".tif", ".tiff")
-        files = [os.path.join(source, f) for f in os.listdir(source)
-                 if f.lower().endswith(exts)]
+        files = [os.path.join(source, f) for f in os.listdir(source) if f.lower().endswith(exts)]
     else:
         files = [source]
 
@@ -87,7 +87,7 @@ def run(weights=ROOT / "yolov5s.pt",      # you can change to your rat model lat
                 print("Detected:", ", ".join(detected_labels))
 
                 for *xyxy, conf, cls in reversed(det):
-                    label = f'{names[int(cls)]} {conf:.2f}'
+                    label = f"{names[int(cls)]} {conf:.2f}"
                     annotator.box_label(xyxy, label, color=colors(int(cls), True))
 
         result = annotator.result()
@@ -100,7 +100,7 @@ def run(weights=ROOT / "yolov5s.pt",      # you can change to your rat model lat
 
 if __name__ == "__main__":
     # SIMPLE USAGE: edit these two paths if needed
-    weights_path = ROOT / "yolov5s.pt"               # later: change to your rat best.pt
-    source_path  = ROOT / "data" / "images"          # folder with images or one image file
+    weights_path = ROOT / "yolov5s.pt"  # later: change to your rat best.pt
+    source_path = ROOT / "data" / "images"  # folder with images or one image file
 
     run(weights=weights_path, source=source_path)
